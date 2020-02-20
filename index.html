@@ -64,6 +64,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-webhacking-kr-41번-문제" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/" class="article-date">
+  <time datetime="2020-02-20T02:54:34.000Z" itemprop="datePublished">2020-02-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/">webhacking.kr 41번 문제</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>문제 소스코드를 보면 다음과 같다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="keyword">include</span> <span class="string">"../../config.php"</span>;</span><br><span class="line">  <span class="keyword">include</span> <span class="string">"./inc.php"</span>;</span><br><span class="line">  <span class="keyword">if</span>($_GET[<span class="string">'view_source'</span>]) view_source();</span><br><span class="line">  error_reporting(E_ALL);</span><br><span class="line">  ini_set(<span class="string">"display_errors"</span>, <span class="number">1</span>);</span><br><span class="line"><span class="meta">?&gt;</span>&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Challenge <span class="number">41</span>&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">isset</span>($_FILES[<span class="string">'up'</span>]) &amp;&amp; $_FILES[<span class="string">'up'</span>])&#123;</span><br><span class="line">    $fn = $_FILES[<span class="string">'up'</span>][<span class="string">'name'</span>];</span><br><span class="line">    $fn = str_replace(<span class="string">"."</span>,<span class="string">""</span>,$fn);</span><br><span class="line">    $fn = str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$fn);</span><br><span class="line">    $fn = str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$fn);</span><br><span class="line">    $fn = str_replace(<span class="string">"/"</span>,<span class="string">""</span>,$fn);</span><br><span class="line"></span><br><span class="line">    $cp = $_FILES[<span class="string">'up'</span>][<span class="string">'tmp_name'</span>];</span><br><span class="line">    copy($cp,<span class="string">"./&#123;$upload_dir&#125;/&#123;$fn&#125;"</span>);</span><br><span class="line">    $f = @fopen(<span class="string">"./&#123;$upload_dir&#125;/&#123;$fn&#125;"</span>,<span class="string">"w"</span>);</span><br><span class="line">    @fwrite($f,$flag);</span><br><span class="line">    @fclose($f);</span><br><span class="line">    <span class="keyword">echo</span>(<span class="string">"Done~"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;form method=post enctype=<span class="string">"multipart/form-data"</span>&gt;</span><br><span class="line">&lt;input type=file name=up&gt;&lt;input type=submit value=<span class="string">'upload'</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;a href=./?view_source=<span class="number">1</span>&gt;view-source&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>업로드 파일의 이름을 받아서 ./uploaddir/파일이름 으로 파일을 작성하고 flag를 입력한다.</p>
+<p>하지만 uploaddir의 이름을 알수없으므로 알아내서 읽으면 문제가 풀릴것 같다.</p>
+<p>., &lt;, &gt;, / 를 공백으로 치환하고 있다. </p>
+<p>코드 위쪽을 보면 에러를 표시하게 하고 있다.<br>하지만 밑에 fopen, fwirte, fclose 함수 앞에 @를 사용하여 오류메시지를 표시하지 않도록 했다.</p>
+<p>하지만 위에 copy함수앞에 @를 쓰지않아 copy함수에 대한 오류는 출력이 된다. </p>
+<p>파일을 선택하지 않고 업로드해 보겠다.</p>
+<img src="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/empty.jpg" class="">
+
+<p>copy함수에 대한 에러메시지를 출력하는것을 확인할 수 있다.</p>
+<p>copy함수에 업로드 디렉터리에 대한 이름이 나오도록 아주 긴 값을 입력해 본다.</p>
+
+
+<img src="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/dirname.jpg" class="">
+
+<p>디렉토리의 이름이 출력된다. 이제 정상적인 파일을 업로드하고 파일을 읽어서 flag값을 얻을 수 있다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/" data-id="ck6u5xx5y0000i2g958pwbu27" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Webhacking-kr-6번-문제" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/02/18/Webhacking-kr-6%EB%B2%88-%EB%AC%B8%EC%A0%9C/" class="article-date">
@@ -231,6 +285,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/">webhacking.kr 41번 문제</a>
+          </li>
         
           <li>
             <a href="/2020/02/18/Webhacking-kr-6%EB%B2%88-%EB%AC%B8%EC%A0%9C/">Webhacking.kr 6번 문제</a>
