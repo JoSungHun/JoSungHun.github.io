@@ -64,6 +64,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webhacking-kr-7번-문제" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/13/Webhacking-kr-7%EB%B2%88-%EB%AC%B8%EC%A0%9C/" class="article-date">
+  <time datetime="2020-03-13T05:16:31.000Z" itemprop="datePublished">2020-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/13/Webhacking-kr-7%EB%B2%88-%EB%AC%B8%EC%A0%9C/">Webhacking.kr 7번 문제</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>소스코드를 보면 다음과 같다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="keyword">include</span> <span class="string">"../../config.php"</span>;</span><br><span class="line">  <span class="keyword">if</span>($_GET[<span class="string">'view_source'</span>]) view_source();</span><br><span class="line"><span class="meta">?&gt;</span>&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Challenge <span class="number">7</span>&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$go=$_GET[<span class="string">'val'</span>];</span><br><span class="line"><span class="keyword">if</span>(!$go) &#123; <span class="keyword">echo</span>(<span class="string">"&lt;meta http-equiv=refresh content=0;url=index.php?val=1&gt;"</span>); &#125;</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;admin page&lt;/title&gt;&lt;/head&gt;&lt;body bgcolor='black'&gt;&lt;font size=2 color=gray&gt;&lt;b&gt;&lt;h3&gt;Admin page&lt;/h3&gt;&lt;/b&gt;&lt;p&gt;"</span>);</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/2|-|\+|from|_|=|\\s|\*|\//i"</span>,$go)) <span class="keyword">exit</span>(<span class="string">"Access Denied!"</span>);</span><br><span class="line">$db = dbconnect();</span><br><span class="line">$rand=rand(<span class="number">1</span>,<span class="number">5</span>);</span><br><span class="line"><span class="keyword">if</span>($rand==<span class="number">1</span>)&#123;</span><br><span class="line">  $result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=($go)"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($rand==<span class="number">2</span>)&#123;</span><br><span class="line">  $result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=(($go))"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($rand==<span class="number">3</span>)&#123;</span><br><span class="line">  $result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=((($go)))"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($rand==<span class="number">4</span>)&#123;</span><br><span class="line">  $result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=(((($go))))"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($rand==<span class="number">5</span>)&#123;</span><br><span class="line">  $result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=((((($go)))))"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$data=mysqli_fetch_array($result);</span><br><span class="line"><span class="keyword">if</span>(!$data[<span class="number">0</span>]) &#123; <span class="keyword">echo</span>(<span class="string">"query error"</span>); <span class="keyword">exit</span>(); &#125;</span><br><span class="line"><span class="keyword">if</span>($data[<span class="number">0</span>]==<span class="number">1</span>)&#123;</span><br><span class="line">  <span class="keyword">echo</span>(<span class="string">"&lt;input type=button style=border:0;bgcolor='gray' value='auth' onclick=\"alert('Access_Denied!')\"&gt;&lt;p&gt;"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">elseif</span>($data[<span class="number">0</span>]==<span class="number">2</span>)&#123;</span><br><span class="line">  <span class="keyword">echo</span>(<span class="string">"&lt;input type=button style=border:0;bgcolor='gray' value='auth' onclick=\"alert('Hello admin')\"&gt;&lt;p&gt;"</span>);</span><br><span class="line">  solve(<span class="number">7</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;a href=./?view_source=<span class="number">1</span>&gt;view-source&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>소스코드를 보면 2, -, +, from, _, =, \s, *, /가 go값에 있으면 Access Denied가 나오게 된다.</p>
+<p>또한 쿼리 결과 2라는 값이 나오면 문제가 풀린다.</p>
+<p>union select를 사용하고 싶지만 preg_match 함수에서 \s(모든공백)를 필터링하고 있으므로 다른방법을 써야한다. 괄호를 사용하여 공백필터링을 우회한다.</p>
+<p>2라는 숫자를 사용하고 싶지만 마찬가지로 preg_match 함수에서 2를 필터링하고 있다. mysql char 함수를 사용하여 2를 쿼리에 넣을 수 있다. </p>
+<p>char함수는 ASCII코드를 문자로 변환한다. 따라서 문자 2에 해당하는 ASCII코드 50을 char함수에 입력하면 2가 나오게 된다.</p>
+<p>문제를 풀기위해 쿼리를 다음과 같이 만들어주면 된다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$result=mysqli_query($db,<span class="string">"select lv from chall7 where lv=(99)union(select(char(50))"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"nice try!"</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/03/13/Webhacking-kr-7%EB%B2%88-%EB%AC%B8%EC%A0%9C/solve.jpg" class="">
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/13/Webhacking-kr-7%EB%B2%88-%EB%AC%B8%EC%A0%9C/" data-id="ck7py5dr20000abg98rto6sii" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-개인정보의-기술적-관리적-보호조치-기준-요약" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/03/10/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%9D%98-%EA%B8%B0%EC%88%A0%EC%A0%81-%EA%B4%80%EB%A6%AC%EC%A0%81-%EB%B3%B4%ED%98%B8%EC%A1%B0%EC%B9%98-%EA%B8%B0%EC%A4%80-%EC%9A%94%EC%95%BD/" class="article-date">
@@ -589,6 +636,10 @@
       <ul>
         
           <li>
+            <a href="/2020/03/13/Webhacking-kr-7%EB%B2%88-%EB%AC%B8%EC%A0%9C/">Webhacking.kr 7번 문제</a>
+          </li>
+        
+          <li>
             <a href="/2020/03/10/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%9D%98-%EA%B8%B0%EC%88%A0%EC%A0%81-%EA%B4%80%EB%A6%AC%EC%A0%81-%EB%B3%B4%ED%98%B8%EC%A1%B0%EC%B9%98-%EA%B8%B0%EC%A4%80-%EC%9A%94%EC%95%BD/">개인정보의 기술적 관리적 보호조치 기준 요약</a>
           </li>
         
@@ -602,10 +653,6 @@
         
           <li>
             <a href="/2020/02/24/Webhacking-kr-47%EB%B2%88-%EB%AC%B8%EC%A0%9C/">Webhacking.kr 47번 문제</a>
-          </li>
-        
-          <li>
-            <a href="/2020/02/20/webhacking-kr-41%EB%B2%88-%EB%AC%B8%EC%A0%9C/">webhacking.kr 41번 문제</a>
           </li>
         
       </ul>
