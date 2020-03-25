@@ -5,12 +5,12 @@ for i in range(10000000, 99999999):
     hashstr = hashlib.sha1(find.encode('utf-8'))
     # print("first find: " + find)
     # print("firsthash : " + hashstr.hexdigest())
-    for z in range(99):
+    for z in range(500):
         hashstr = hashlib.sha1(hashstr.hexdigest().encode('utf-8'))
         # print("hash100 : " + hashstr.hexdigest())
 
     hash100 = hashstr.hexdigest()
     # print(hash100)
-    if hash100 == "3c66ea536ef70934f4af883d8f2098255d59f3f9":
+    if hash100 == "3f37be195d7eee5cd9bdff531b30305c6c8cca51":
         print("find!!!: " + find)
         exit()
